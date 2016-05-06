@@ -1,0 +1,7 @@
+---
+name: cockroachdb
+templates:
+  ctl.sh.erb: bin/ctl
+
+packages:
+- cockroachdb-beta-20160505

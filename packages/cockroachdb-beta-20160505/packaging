@@ -1,0 +1,45 @@
+# abort script on any command that exits with a non zero value
+#set -eux
+set -ux
+
+mkdir -p /var/vcap/data/go
+export GOPATH=/var/vcap/data/go
+export GOROOT=$(readlink -nf /var/vcap/packages/golang1.6)
+
+export PATH=$GOROOT/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
+
+exec > /tmp/$$ 2>&1
+
+env
+
+if [ -f /etc/redhat-release ]; then
+  yum install -y git
+elif [ -f /etc/lsb-release ]; then
+  apt-get update
+  apt-get install -y git
+fi
+
+export TMPDIR=/var/vcap/data/tmp
+mkdir -p $TMPDIR
+
+#sleep 3600
+pushd cockroach-beta-20160505
+  tar xvf cockroach-beta-20160505.tar.gz
+
+  mkdir -p $GOPATH/src/github.com/cockroachdb
+
+  mv \
+    cockroach-beta-20160505 \
+    $GOPATH/src/github.com/cockroachdb/cockroach
+popd
+
+pushd $GOPATH/src/github.com/cockroachdb/cockroach
+  make build
+  ls -al .
+  ls -al $GOPATH/bin
+
+  # cp binaries to known location
+  mkdir -p $BOSH_INSTALL_TARGET/bin
+  mv $GOPATH/src/github.com/cockroachdb/cockroach/cockroach $BOSH_INSTALL_TARGET/bin/
+popd
