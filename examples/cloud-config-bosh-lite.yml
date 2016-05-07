@@ -12,28 +12,29 @@ disk_types:
 compilation:
   workers: 1
   network: default
+  az: z1
   reuse_compilation_vms: true
   vm_type: default
 networks:
 - name: default
   subnets:
-  - cloud_properties:
-      name: random
+  - az: z1
+    reserved: [10.244.0.1]
     range: 10.244.0.0/30
-    reserved:
-    - 10.244.0.1
-  - cloud_properties:
+    cloud_properties:
       name: random
+  - az: z1
     range: 10.244.0.4/30
-    reserved:
-    - 10.244.0.5
-  - cloud_properties:
+    reserved: [10.244.0.5]
+    cloud_properties:
       name: random
+  - az: z1
     range: 10.244.0.8/30
-    reserved:
-    - 10.244.0.9
-  - cloud_properties:
+    reserved: [10.244.0.9]
+    cloud_properties:
       name: random
+  - az: z1
     range: 10.244.0.12/30
-    reserved:
-    - 10.244.0.13
+    reserved: [10.244.0.13]
+    cloud_properties:
+      name: random

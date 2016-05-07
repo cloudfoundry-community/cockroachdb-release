@@ -14,15 +14,17 @@ stemcells:
 update:
   canaries: 1
   max_in_flight: 1
-  canary_watch_time: 30000-600000
-  update_watch_time: 5000-600000
+  canary_watch_time: 1000-300000
+  update_watch_time: 1000-300000
 
 instance_groups:
 - name: cockroachdb
   instances: 3 # this number should always be odd (quorum)
+  azs: [z1]
   jobs:
   - name: cockroachdb
     release: cockroachdb
+    properties: {}
   vm_type: default
   stemcell: default
   networks:
