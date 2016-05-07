@@ -1,17 +1,23 @@
 #!/bin/bash
 
 RUN_DIR=/var/vcap/sys/run/cockroachdb
+LOG_DIR=/var/vcap/sys/log/cockroachdb
 PIDFILE=${RUN_DIR}/cockroachdb.pid
 
 case $1 in
 
   start)
-    mkdir -p $RUN_DIR
-    chown -R vcap:vcap $RUN_DIR
+    mkdir -p $RUN_DIR $LOG_DIR
+    chown -R vcap:vcap $RUN_DIR $LOG_DIR
     echo $$ > $PIDFILE
 
     # FIXME: the following line starts differently if you're NOT the first cockroach
-    exec /var/vcap/packages/cockroachdb-beta-20160505/bin/cockroach start
+    <% bootstrap_address = link("cockroach").instances.find(&:bootstrap).address  %>
+<% if spec.address == bootstrap_address %>
+  <%=    "exec /var/vcap/packages/cockroachdb-beta-20160505/bin/cockroach start --insecure --log-dir $LOG_DIR --host=#{bootstrap_address}" %>
+<% else %>
+  <%=    "exec /var/vcap/packages/cockroachdb-beta-20160505/bin/cockroach start --insecure --log-dir $LOG_DIR --host=#{spec.address} --join=#{bootstrap_address}:26257" %>
+<% end %>
     ;;
 
   stop)

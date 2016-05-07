@@ -3,5 +3,13 @@ name: cockroachdb
 templates:
   ctl.sh.erb: bin/ctl
 
+consumes:
+- name: cockroach
+  type: db
+
+provides:
+- name: cockroach
+  type: db
+
 packages:
 - cockroachdb-beta-20160505

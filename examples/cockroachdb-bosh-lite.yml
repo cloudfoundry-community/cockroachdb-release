@@ -1,7 +1,6 @@
-# Auto-generated at 2016-04-26 14:01:54 -0700 using ./boshcfg aws template dummy
 name: cockroachdb
 
-director_uuid: 510ac165-ee99-4c45-8274-1b989e5d5697
+director_uuid: __REPLACE_WITH_DIRECTORS_UUID__
 
 releases:
   - name: cockroachdb
@@ -20,7 +19,7 @@ update:
 
 instance_groups:
 - name: cockroachdb
-  instances: 1
+  instances: 3 # this number should always be odd (quorum)
   jobs:
   - name: cockroachdb
     release: cockroachdb
@@ -28,4 +27,7 @@ instance_groups:
   stemcell: default
   networks:
   - name: default
-
+  provides:
+    cockroach: {from: cockroachdb}
+  consumes:
+    cockroach: {from: cockroachdb}
