@@ -1,1 +1,9 @@
---- {}
+---
+cockroach-beta-20160505/cockroach-beta-20160505.tar.gz:
+  object_id: 9b619750-6376-455a-85ef-49d509b63af0
+  sha: 658ed5e40e78dc1e8cf107b16c831b592de5b668
+  size: 9511423
+golang1.6/go1.6.2.linux-amd64.tar.gz:
+  object_id: a6bcba39-9362-4bdf-b559-6e54776200be
+  sha: b8318b09de06076d5397e6ec18ebef3b45cd315d
+  size: 84840658
