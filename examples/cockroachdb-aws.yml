@@ -1,7 +1,6 @@
-# Auto-generated at 2016-04-26 14:01:54 -0700 using ./boshcfg aws template dummy
 name: cockroachdb
 
-director_uuid: 60dde7c9-564d-4409-b3b3-edf6bceec9ed
+director_uuid: __REPLACE_WITH_DIRECTORS_UUID__
 
 releases:
   - name: cockroachdb
@@ -9,7 +8,7 @@ releases:
 
 stemcells:
 - alias: default
-  name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+  os: ubuntu-trusty
   version: latest
 
 update:
@@ -20,12 +19,16 @@ update:
 
 instance_groups:
 - name: cockroachdb
-  instances: 1
+  instances: 3 # this number should always be odd (quorum)
   azs: [ z1, z2, z3, z4 ]
   jobs:
   - name: cockroachdb
     release: cockroachdb
-  vm_type: m3.medium
+  vm_type: t2.micro
   stemcell: default
   networks:
   - name: private
+  provides:
+    cockroach: {from: cockroachdb}
+  consumes:
+    cockroach: {from: cockroachdb}
