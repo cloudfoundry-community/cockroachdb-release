@@ -1,8 +1,14 @@
-# CockroachDB BOSH Release
+# DEPRECATED
+
+This BOSH release is **deprecated** and is no longer maintained.
+
+We encourage you to use [Dmitriy Kalinin's release of CockroachDB](https://github.com/cppforlife/cockroachdb-release) instead.
+
+## CockroachDB BOSH Release
 
 BOSH release of CockroachDB, a distributed SQL database built on a transactional and strongly-consistent key-value store
 
-## Quick Start for [BOSH Lite](https://github.com/cloudfoundry/bosh-lite)
+### Quick Start for [BOSH Lite](https://github.com/cloudfoundry/bosh-lite)
 
 1. Target your BOSH Lite director with your BOSH CLI.
 2. Upload a *cloud-config* to your director, e.g.
